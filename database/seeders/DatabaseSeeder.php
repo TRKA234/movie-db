@@ -1,13 +1,10 @@
 <?php
 
+
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Movie;
-
-
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,16 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
+        // Jalankan seeder kategori terlebih dahulu
         $this->call(CategorySeeder::class);
 
-        Movie::factory()->count(20)->create();
-
+        // Generate 20 data movie dummy
+        Movie::factory()->count(50)->create();
     }
 }
