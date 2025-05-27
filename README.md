@@ -1,6 +1,9 @@
-#Nama : Kardiko Anando
-#Nim  : 2301092022
-#Kelas: MI2A
+<p align="center">
+  <strong>📌 Projek oleh:</strong><br>
+  <strong>Nama:</strong> Kardiko Anando<br>
+  <strong>NIM:</strong> 2301092022<br>
+  <strong>Kelas:</strong> MI2A
+</p>
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
