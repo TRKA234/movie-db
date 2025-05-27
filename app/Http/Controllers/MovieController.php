@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Movie;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class MovieController extends Controller
 {
@@ -27,22 +28,38 @@ class MovieController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'slug' => 'required|unique:movies,slug|string|max:255',
+            // 'slug' => 'required|unique:movies,slug|string|max:255',
             'synopsis' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'year' => 'required|digits:4|integer',
             'actors' => 'nullable|string|max:255',
-            'cover_image' => 'nullable|url|max:255',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
+
+        $slug = Str::slug($request->title);
+
+        $count = Movie::where('slug', $slug)->count();
+        if ($count > 0) {
+            $slug .= '-' . ($count + 1);
+        }
+
+        if ($request->hasFile('cover_image')) {
+            $file = $request->file('cover_image');
+            $coverImage = $file->store('covers', 'public');
+            $coverImage = 'storage/' . $coverImage;
+        } else {
+            $coverImage = null;
+        }
+
 
         Movie::create([
             'title' => $request->title,
-            'slug' => $request->slug,
+            'slug' => $slug,
             'synopsis' => $request->synopsis,
             'category_id' => $request->category_id,
             'year' => $request->year,
             'actors' => $request->actors,
-            'cover_image' => $request->cover_image,
+            'cover_image' => $coverImage,
         ]);
 
         return redirect()->route('movies.index')->with('success', 'Movie berhasil ditambahkan!');
@@ -66,22 +83,39 @@ class MovieController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:movies,slug,' . $movie->id,
+            // 'slug' => 'required|string|max:255|unique:movies,slug,' . $movie->id,
             'synopsis' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'year' => 'required|digits:4|integer',
             'actors' => 'nullable|string|max:255',
-            'cover_image' => 'nullable|url|max:255',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
+
+        $slug = Str::slug($request->title);
+
+    // Pastikan slug unik (kecuali untuk movie ini sendiri)
+    $count = Movie::where('slug', $slug)->where('id', '!=', $movie->id)->count();
+    if ($count > 0) {
+        $slug .= '-' . ($count + 1);
+    }
+
+    // Proses cover image
+    if ($request->hasFile('cover_image')) {
+        $file = $request->file('cover_image');
+        $coverImage = $file->store('covers', 'public');
+        $coverImage = 'storage/' . $coverImage;
+    } else {
+        $coverImage = $movie->cover_image; // pakai yang lama jika tidak upload baru
+    }
 
         $movie->update([
             'title' => $request->title,
-            'slug' => $request->slug,
+            'slug' => $slug,
             'synopsis' => $request->synopsis,
             'category_id' => $request->category_id,
             'year' => $request->year,
             'actors' => $request->actors,
-            'cover_image' => $request->cover_image,
+            'cover_image' => $coverImage,
         ]);
 
         return redirect()->route('movies.index')->with('success', 'Movie berhasil diupdate!');

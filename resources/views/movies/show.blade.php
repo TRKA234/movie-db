@@ -6,7 +6,7 @@
     <div class="card mb-3 shadow-lg" style="background-color: #232323;">
         <div class="row g-0">
             <div class="col-md-4 d-flex align-items-center justify-content-center p-3">
-                <img src="{{ $movie->cover_image }}" class="img-fluid rounded shadow" alt="{{ $movie->title }}" style="max-height: 400px; object-fit: cover;">
+                <img src="{{ asset($movie->cover_image) }}" class="img-fluid rounded shadow" alt="{{ $movie->title }}" style="max-height: 400px; object-fit: cover;">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
