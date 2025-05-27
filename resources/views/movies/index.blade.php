@@ -9,7 +9,7 @@
         <a href="{{ route('movies.create') }}" class="btn btn-success mb-3"> Tambah Movie</a>
         <div class="row">
             @foreach ($movies as $movie)
-                <div class="col-md-3 mb-4">
+                <div class="col-md-4 mb-4">
                     <div class="card h-100 shadow" style="border-radius: 12px;">
                         <img src="{{ $movie->cover_image }}" class="card-img-top" alt="{{ $movie->title }}"
                             style="height:340px;object-fit:cover;border-top-left-radius:12px;border-top-right-radius:12px;">

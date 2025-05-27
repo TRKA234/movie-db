@@ -220,7 +220,7 @@
 
     {{-- footer --}}
     <footer class="text-center py-3" style="background:#121212;color:#f5c518;font-size:1rem;">
-        &copy; {{ date('Y') }} Movie DB &mdash; Inspired by IMDb by Kardiko Anando
+        &copy; {{ date('Y') }} Movie DB &mdash; Kardiko Anando
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
