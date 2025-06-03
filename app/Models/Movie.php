@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model
 {
-    public function getRouteKeyName(){return 'slug';}
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
     use HasFactory;
 
     // Relasi ke kategori

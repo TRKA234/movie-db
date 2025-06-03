@@ -21,8 +21,9 @@
                             <span class="badge bg-secondary">{{ $movie->category->category_name ?? '-' }}</span>
                         </div>
                         <div class="card-footer text-center" style="background:#232323;">
-                            <a href="{{ route('movies.show', $movie) }}" class="btn btn-sm btn-primary me-1">Detail</a>
-                            <a href="{{ route('movies.edit', $movie) }}" class="btn btn-sm btn-warning me-1">Edit</a>
+                            <a href="{{ route('movies.show', ['id' => $movie->id, 'slug' => $movie->slug]) }}"
+                                class="btn btn-sm btn-primary me-1">Detail</a>
+                            <a href="{{ route('movies.edit', $movie->slug) }}" class="btn btn-sm btn-warning me-1">Edit</a>
                             <form action="{{ route('movies.destroy', $movie) }}" method="POST" class="d-inline"
                                 onsubmit="return confirm('Delete this movie?')">
                                 @csrf

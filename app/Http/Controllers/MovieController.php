@@ -66,8 +66,13 @@ class MovieController extends Controller
     }
 
     // Tampilkan detail movie
-    public function show(Movie $movie)
+    public function show($id, $slug)
     {
+        $movie = Movie::findOrFail($id);
+        // Redirect jika slug di URL tidak sama dengan slug di database (SEO friendly)
+        if ($movie->slug !== $slug) {
+            return redirect()->route('movies.show', ['id' => $movie->id, 'slug' => $movie->slug]);
+        }
         return view('movies.show', compact('movie'));
     }
 
@@ -93,20 +98,20 @@ class MovieController extends Controller
 
         $slug = Str::slug($request->title);
 
-    // Pastikan slug unik (kecuali untuk movie ini sendiri)
-    $count = Movie::where('slug', $slug)->where('id', '!=', $movie->id)->count();
-    if ($count > 0) {
-        $slug .= '-' . ($count + 1);
-    }
+        // Pastikan slug unik (kecuali untuk movie ini sendiri)
+        $count = Movie::where('slug', $slug)->where('id', '!=', $movie->id)->count();
+        if ($count > 0) {
+            $slug .= '-' . ($count + 1);
+        }
 
-    // Proses cover image
-    if ($request->hasFile('cover_image')) {
-        $file = $request->file('cover_image');
-        $coverImage = $file->store('covers', 'public');
-        $coverImage = 'storage/' . $coverImage;
-    } else {
-        $coverImage = $movie->cover_image; // pakai yang lama jika tidak upload baru
-    }
+        // Proses cover image
+        if ($request->hasFile('cover_image')) {
+            $file = $request->file('cover_image');
+            $coverImage = $file->store('covers', 'public');
+            $coverImage = 'storage/' . $coverImage;
+        } else {
+            $coverImage = $movie->cover_image; // pakai yang lama jika tidak upload baru
+        }
 
         $movie->update([
             'title' => $request->title,
