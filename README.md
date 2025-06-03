@@ -1,6 +1,7 @@
+<?php
 // ===============================================
 //  MovieController.php
-//  Dibuat oleh: Ahmad Fadli
+//  Dibuat oleh: Kardiko Anando
 //  Tanggal: 27-05-2025
 //  Deskripsi: Controller untuk fitur Movie
 // ===============================================
