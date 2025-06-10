@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\Category;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class MovieController extends Controller
@@ -129,7 +131,16 @@ class MovieController extends Controller
     // Hapus movie
     public function destroy(Movie $movie)
     {
-        $movie->delete();
-        return redirect()->route('movies.index')->with('success', 'Movie berhasil dihapus!');
+
+        //$movie->delete();
+        //return redirect()->route('movies.index')->with('success', 'Movie berhasil dihapus!');
+
+        // Hanya admin yang boleh hapus
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            $movie->delete();
+            return redirect()->route('movies.index')->with('success', 'Movie berhasil dihapus!');
+        } else {
+            abort(403, 'Akses ditolak! Anda bukan admin.');
+        }
     }
 }

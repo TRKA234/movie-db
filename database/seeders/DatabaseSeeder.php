@@ -17,9 +17,9 @@ class DatabaseSeeder extends Seeder
         // Jalankan seeder kategori terlebih dahulu
         // $this->call(CategorySeeder::class);
 
-        // // Generate 20 data movie dummy
+        // // // Generate 20 data movie dummy
         // Movie::factory()->count(50)->create();
 
-        User::factory(3)->create();
+        // User::factory(3)->create();
     }
 }

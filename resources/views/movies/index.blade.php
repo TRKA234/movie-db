@@ -23,13 +23,15 @@
                         <div class="card-footer text-center" style="background:#232323;">
                             <a href="{{ route('movies.show', ['id' => $movie->id, 'slug' => $movie->slug]) }}"
                                 class="btn btn-sm btn-primary me-1">Detail</a>
-                            <a href="{{ route('movies.edit', $movie->slug) }}" class="btn btn-sm btn-warning me-1">Edit</a>
-                            <form action="{{ route('movies.destroy', $movie) }}" method="POST" class="d-inline"
-                                onsubmit="return confirm('Delete this movie?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-danger">Delete</button>
-                            </form>
+                            <a href="{{ route('movies.edit', $movie->id) }}" class="btn btn-sm btn-warning me-1">Edit</a>
+                            @can('delete')
+                                <form action="{{ route('movies.destroy', $movie) }}" method="POST" class="d-inline"
+                                    onsubmit="return confirm('Delete this movie?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            @endcan
                         </div>
                     </div>
                 </div>
